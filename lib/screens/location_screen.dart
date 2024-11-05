@@ -13,7 +13,7 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen> {
   final TextEditingController textEditingController = TextEditingController();
-  JeolocatorModel jeolocatorModel= JeolocatorModel();
+  JeolocatorModel jeolocatorModel = JeolocatorModel();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -36,17 +36,29 @@ class _LocationScreenState extends State<LocationScreen> {
                   decoration: const InputDecoration(hintText: "Enter Location"),
                   onChanged: (String value) {
                     print("Object:$value");
-                    ApiServices().autoComplitePlace(value).then((value){
-
-                      jeolocatorModel=value!;
-                    }).onError((err,stackTrace){
+                    ApiServices().autoComplitePlace(value).then((value) {
+                      jeolocatorModel = value!;
+                      setState(() {});
+                    }).onError((err, stackTrace) {
                       debugPrint(err.toString());
                     });
                   },
                 )),
                 const CurrentLocationButton()
               ],
-            )
+            ),
+            Expanded(child: ListView.builder(
+              shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount:jeolocatorModel.results?.length??0 ,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: Icon(Icons.location_on,color: Colors.red,),
+                    title: Text(jeolocatorModel.results?[index].name??""),
+                    subtitle: Text(jeolocatorModel.results?[index].country??""),
+                  );
+
+            }))
           ],
         ),
       ),
