@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sunrisesunset/repository/api_services.dart';
+import 'package:sunrisesunset/screens/homeScreen.dart';
 
 import '../models/jeolocatormodel.dart';
 import 'current_location_button.dart';
@@ -47,18 +48,40 @@ class _LocationScreenState extends State<LocationScreen> {
                 const CurrentLocationButton()
               ],
             ),
-            Expanded(child: ListView.builder(
-              shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount:jeolocatorModel.results?.length??0 ,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: Icon(Icons.location_on,color: Colors.red,),
-                    title: Text(jeolocatorModel.results?[index].name??""),
-                    subtitle: Text(jeolocatorModel.results?[index].country??""),
-                  );
-
-            }))
+            Expanded(
+                child: Visibility(
+              visible: textEditingController.text.isNotEmpty,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: jeolocatorModel.results?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Homescreen(
+                                    lat: jeolocatorModel
+                                            .results?[index].latitude ??
+                                        0.0,
+                                    lng: jeolocatorModel
+                                            .results?[index].longitude ??
+                                        0.0,
+                                    placeName:
+                                        jeolocatorModel.results?[index].name ??
+                                            "")));
+                      },
+                      leading: Icon(
+                        Icons.location_on,
+                        color: Colors.red,
+                      ),
+                      title: Text(jeolocatorModel.results?[index].name ?? ""),
+                      subtitle:
+                          Text(jeolocatorModel.results?[index].country ?? ""),
+                    );
+                  }),
+            ))
           ],
         ),
       ),
