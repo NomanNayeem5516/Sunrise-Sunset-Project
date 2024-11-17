@@ -60,35 +60,49 @@ class _HomescreenState extends State<Homescreen> {
             color: Colors.brown,
           ),
         ),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 200,
-              width: double.infinity,
-              child: Image.network(
-                  "https://static.vecteezy.com/system/resources/thumbnails/036/461/445/small_2x/ai-generated-beautiful-sunrise-over-green-meadow-in-the-morning-landscape-with-fog-photo.jpg"),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Text('SunRise'),
-                      Text(sunriseSunsetModel.results?.sunrise??''),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text('SunSet'),
-                      Text(sunriseSunsetModel.results?.sunset??''),
-                    ],
-                  )
-                ],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 20,
               ),
-            )
-          ],
+              SizedBox(
+                height: 200,
+                width: double.infinity,
+                child: Image.network(
+                    "https://static.vecteezy.com/system/resources/thumbnails/036/461/445/small_2x/ai-generated-beautiful-sunrise-over-green-meadow-in-the-morning-landscape-with-fog-photo.jpg"),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          'SunRise',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text(sunriseSunsetModel.results?.sunrise ?? ''),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          'SunSet',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text(sunriseSunsetModel.results?.sunset ?? ''),
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
